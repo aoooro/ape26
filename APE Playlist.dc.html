@@ -252,8 +252,8 @@
                     <sc-if value="{{ s.chosen }}"><span aria-hidden="true" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#F0521E;"></span></sc-if>
                     <img src="{{ s.thumb }}" loading="lazy" alt="" style="width:58px;height:33px;object-fit:cover;background:#222;flex:none;"/>
                     <div style="flex:1;min-width:0;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.title }}</div>
-                    <sc-if value="{{ s.chosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;font-size:13px;background:#F0521E;color:#fff;border:1px solid #F0521E;flex:none;">✓</span></sc-if>
-                    <sc-if value="{{ s.notChosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;font-size:14px;background:transparent;color:#F4F1EA;border:1px solid rgba(244,241,234,.4);flex:none;">+</span></sc-if>
+                    <sc-if value="{{ s.chosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:#F0521E;color:#fff;border:1px solid #F0521E;flex:none;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 6 10.5 11 4"/></svg></span></sc-if>
+                    <sc-if value="{{ s.notChosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:transparent;color:#F4F1EA;border:1px solid rgba(244,241,234,.4);flex:none;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 1.5V10.5M1.5 6H10.5"/></svg></span></sc-if>
                   </div>
                 </sc-for>
                 <sc-if value="{{ b.hasMore }}">
