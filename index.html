@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="data/ape-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  @font-face{font-family:'AP Grotesk';src:url('brand/fonts/APAllPurposeGroteskTRIAL-Black.otf') format('opentype');font-weight:800 900;font-style:normal;font-display:swap;}
+  @font-face{font-family:'AP Grotesk';src:url('brand/fonts/APAllPurposeGroteskTRIAL-Bold.otf') format('opentype');font-weight:600 700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'AP Grotesk';src:url('brand/fonts/APAllPurposeGroteskTRIAL-Medium.otf') format('opentype');font-weight:100 500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'ABC Walter';src:url('brand/fonts/ABCWalterNeueVariable-Trial.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap;}
+  @font-face{font-family:'ABC Walter';src:url('brand/fonts/ABCWalterNeueVariable-Trial.ttf') format('truetype');font-weight:100 900;font-style:italic;font-display:swap;}
+  html,body{margin:0;padding:0;background:#0c0c0e}
+  button{font-family:inherit;cursor:pointer}
+  input{font-family:inherit}
+  ::selection{background:#F0521E;color:#fff}
+  @keyframes apeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes apeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @keyframes apeFade{from{opacity:0}to{opacity:1}}
+  @media (max-width:880px){
+    #ape-summary-col{flex:1 1 100% !important;max-width:none !important;}
+    #ape-summary{position:static !important;width:auto !important;max-height:none !important;right:auto !important;top:auto !important;box-shadow:none !important;}
+  }
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;background:#0c0c0e;color:#F4F1EA;font-family:'AP Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <sc-if value="{{ grain }}" hint-placeholder-val="{{ true }}">
+    <div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:80;opacity:.15;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.85 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+  </sc-if>
+
+  <!-- ============================ LANDING ============================ -->
+  <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="01 · Landing" style="position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
+    <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatorange.jpg) center center/cover;z-index:0;clip-path:inset(0 0 calc(100% - 58vh) 0);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatblue.jpg) center center/cover;z-index:0;clip-path:inset(58vh 0 0 0);"></div>
+
+    <header style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+      <div style="width:120px;"></div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:46px;width:auto;display:block;"/>
+      <a href="#" target="_blank" rel="noopener" style="text-decoration:none;background:#F4F1EA;color:#0c0c0e;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:11px 18px;border-radius:999px;white-space:nowrap;">Get Tickets ↗</a>
+    </header>
+
+    <div style="position:relative;z-index:6;text-align:center;padding:clamp(30px,5vh,54px) 24px 0;font-size:13px;letter-spacing:.26em;text-transform:uppercase;font-weight:600;opacity:.95;animation:apeUp .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:.05s;">All Points East 2026 · 28–29 August · Victoria Park, London</div>
+
+    <main style="position:relative;z-index:6;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:clamp(36px,7vh,90px) 24px 40px;gap:26px;">
+      <h1 style="margin:0;color:#fff;font-weight:800;line-height:.9;letter-spacing:-.01em;text-transform:none;font-size:clamp(42px,7.6vw,100px);max-width:13ch;animation:apeUp .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:.12s;text-shadow:0 4px 40px rgba(12,12,14,.4);">Build Your <span style="display:block;font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;text-transform:none;letter-spacing:0;">Festival</span> Playlist</h1>
+      <p style="margin:clamp(24px,7vh,80px) 0 0;font-size:clamp(16px,2vw,19px);font-weight:500;max-width:34ch;line-height:1.4;opacity:.95;animation:apeUp .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:.2s;">Pick your day. Choose your artists. Make the playlist for your All Points East.</p>
+      <button onClick="{{ startBuilding }}" style="margin-top:34px;background:#F4F1EA;color:#0c0c0e;border:none;padding:18px 34px;font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 14px 44px rgba(12,12,14,.4);transition:transform .14s;animation:apeUp .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:.28s;" style-hover="transform:scale(1.04)">Start Your Setlist <span style="font-size:18px;">→</span></button>
+    </main>
+
+    <div style="position:relative;z-index:6;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;padding:24px 40px 40px;animation:apeUp .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:.36s;">
+      <div style="flex:1 1 320px;max-width:460px;background:rgba(12,12,14,.9);border:1.5px solid rgba(244,241,234,.55);padding:18px 20px;backdrop-filter:blur(3px);">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;">Night One · Friday</div>
+        <div style="font-size:34px;font-weight:800;line-height:1;letter-spacing:-.02em;margin:8px 0 10px;">28 <span style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;font-size:16px;">aug</span></div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">+ Tyler, The Creator</div>
+        <div style="font-size:12px;line-height:1.55;opacity:.82;">Rex Orange County · Turnstile · Mariah The Scientist · AG Club · BB Trickz · Clipse · Fakemink · Jean Dawson · LA Reezy · Liim · Lovespells · Mustard · Pour La Vie · Ravyn Lenae · Rochelle Jordan · Saam Sultan · Sade Olutola · Sexyy Red · Shady Nasty · Vince Staples · Yebba · Zack Fox</div>
+      </div>
+      <div style="flex:1 1 320px;max-width:460px;background:rgba(12,12,14,.9);border:1.5px solid rgba(244,241,234,.55);padding:18px 20px;backdrop-filter:blur(3px);">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;">Night Two · Saturday</div>
+        <div style="font-size:34px;font-weight:800;line-height:1;letter-spacing:-.02em;margin:8px 0 10px;">29 <span style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;font-size:16px;">aug</span></div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">+ Tyler, The Creator</div>
+        <div style="font-size:12px;line-height:1.55;opacity:.82;">Mustard · Daniel Caesar · Baby Keem · Dijon · Danny Brown · DJ Gummy Bear (Montell Fish) · Dove Ellis · Faye Webster · Ghostface Killah · Jim Legxacy · Khamari · Ledbyher · Mike · Natanya · Partyof2 · Quadeca · Samara Cyn · Sunshine Benzi · Syd</div>
+      </div>
+    </div>
+
+    <div style="position:relative;z-index:6;display:flex;gap:14px;justify-content:center;align-items:center;padding:0 40px 30px;font-size:12px;letter-spacing:.04em;opacity:.72;">
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Terms &amp; Conditions</a>
+      <span aria-hidden="true" style="opacity:.5;">|</span>
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Privacy Policy</a>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============================ DAY SELECT ============================ -->
+  <sc-if value="{{ isDay }}">
+  <section data-screen-label="02 · Pick your day" style="position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;background:#0c0c0e;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
+    <div aria-hidden="true" style="position:absolute;top:0;bottom:0;left:0;width:50%;background:url(brand/splatorange.jpg) center/cover;z-index:0;"></div>
+    <div aria-hidden="true" style="position:absolute;top:0;bottom:0;right:0;width:50%;background:url(brand/splatblue.jpg) center/cover;z-index:0;"></div>
+
+    <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.92);backdrop-filter:blur(10px);">
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">1</b> / 3 · Pick your day</div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <button onClick="{{ dayBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Back</button>
+    </header>
+
+    <div style="position:relative;z-index:6;text-align:center;padding:clamp(20px,3.4vh,40px) 24px 0;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;">
+      <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:#fff;opacity:.85;margin-bottom:10px;text-shadow:0 1px 3px rgba(12,12,14,.45);">Fri 28 &amp; Sat 29 August · Victoria Park · Both nights headlining</div>
+      <h2 style="margin:0;color:#fff;font-weight:800;text-transform:uppercase;line-height:.84;letter-spacing:-.03em;font-size:clamp(42px,8.6vw,120px);text-shadow:0 2px 16px rgba(12,12,14,.35);margin-top:clamp(22px,4vh,46px);">Tyler, The Creator</h2>
+    </div>
+
+    <div style="position:relative;z-index:6;flex:1;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;padding:clamp(18px,3vh,40px) 0 0;">
+      <button onClick="{{ chooseFri }}" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.08s;" style-hover="filter:brightness(1.07)">
+        <div>
+          <div style="font-weight:800;text-transform:uppercase;font-size:clamp(30px,4.4vw,58px);line-height:.9;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.4);">Friday</div>
+          <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:clamp(14px,1.6vw,20px);margin-top:4px;opacity:.95;text-shadow:0 1px 3px rgba(12,12,14,.4);">Fri 28 Aug</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <sc-for list="{{ friHead }}" as="h" hint-placeholder-count="3">
+            <div style="font-weight:800;text-transform:uppercase;font-size:clamp(20px,2.6vw,34px);line-height:1.04;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.45);">{{ h }}</div>
+          </sc-for>
+        </div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:.18em;opacity:.85;text-shadow:0 1px 3px rgba(12,12,14,.45);">[ A–Z ]</div>
+        <div style="columns:2;column-gap:18px;font-weight:700;font-size:clamp(12px,1.15vw,15px);line-height:1.62;text-shadow:0 1px 2px rgba(12,12,14,.4);">
+          <sc-for list="{{ friAZ }}" as="n" hint-placeholder-count="10">
+            <div style="break-inside:avoid;">{{ n }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-top:auto;padding-top:8px;"><span style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Friday set <span style="font-size:16px;">→</span></span></div>
+      </button>
+
+      <button onClick="{{ chooseSat }}" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.16s;" style-hover="filter:brightness(1.07)">
+        <div>
+          <div style="font-weight:800;text-transform:uppercase;font-size:clamp(30px,4.4vw,58px);line-height:.9;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.4);">Saturday</div>
+          <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:clamp(14px,1.6vw,20px);margin-top:4px;opacity:.95;text-shadow:0 1px 3px rgba(12,12,14,.4);">Sat 29 Aug</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <sc-for list="{{ satHead }}" as="h" hint-placeholder-count="3">
+            <div style="font-weight:800;text-transform:uppercase;font-size:clamp(20px,2.6vw,34px);line-height:1.04;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.45);">{{ h }}</div>
+          </sc-for>
+        </div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:.18em;opacity:.85;text-shadow:0 1px 3px rgba(12,12,14,.45);">[ A–Z ]</div>
+        <div style="columns:2;column-gap:18px;font-weight:700;font-size:clamp(12px,1.15vw,15px);line-height:1.62;text-shadow:0 1px 2px rgba(12,12,14,.4);">
+          <sc-for list="{{ satAZ }}" as="n" hint-placeholder-count="10">
+            <div style="break-inside:avoid;">{{ n }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-top:auto;padding-top:8px;"><span style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Saturday set <span style="font-size:16px;">→</span></span></div>
+      </button>
+    </div>
+
+    <div style="position:relative;z-index:6;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 40px 28px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(12,12,14,.5);">
+      <span style="opacity:.85;">Tap a day to start your setlist</span>
+    </div>
+    <div style="position:relative;z-index:6;display:flex;gap:14px;justify-content:center;align-items:center;padding:0 40px 26px;font-size:12px;letter-spacing:.04em;opacity:.72;color:#fff;text-shadow:0 1px 3px rgba(12,12,14,.5);">
+      <a href="#" style="color:#fff;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Terms &amp; Conditions</a>
+      <span aria-hidden="true" style="opacity:.5;">|</span>
+      <a href="#" style="color:#fff;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Privacy Policy</a>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============================ ARTIST PICK ============================ -->
+  <sc-if value="{{ isPick }}">
+  <section data-screen-label="03 · Pick artists" style="position:relative;min-height:100vh;overflow:hidden;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
+    <sc-if value="{{ splatAccents }}">
+      <div aria-hidden="true" style="position:fixed;top:-180px;right:-140px;width:560px;height:440px;background:url(brand/splatorange.jpg) center/cover;opacity:.32;mix-blend-mode:screen;filter:blur(3px);z-index:0;pointer-events:none;"></div>
+    </sc-if>
+    <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.86);backdrop-filter:blur(10px);">
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">2</b> / 3 · Pick artists</div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <button onClick="{{ pickBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Day</button>
+    </header>
+
+    <div style="position:relative;z-index:2;padding:34px 28px 6px;">
+      <h2 style="margin:0;font-weight:800;font-size:clamp(30px,5vw,56px);line-height:.95;letter-spacing:-.02em;text-transform:uppercase;animation:apeUp .5s cubic-bezier(.2,.7,.2,1) both;">Who do you want <span style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;text-transform:none;">to see?</span></h2>
+      <p style="margin:12px 0 0;color:rgba(244,241,234,.7);font-size:14px;max-width:52ch;line-height:1.5;animation:apeUp .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:.06s;">Tap the artists you're catching on <span style="color:#F4F1EA;font-weight:600;">{{ dayLabel }}</span>. We'll build a playlist from your picks. Or let us do it for you.</p>
+    </div>
+
+    <div style="position:relative;z-index:2;padding:18px 28px 8px;">
+      <button onClick="{{ autoGen }}" style="background:#F0521E;color:#fff;border:none;padding:13px 22px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.03em;display:inline-flex;align-items:center;gap:9px;transition:transform .14s;" style-hover="transform:scale(1.03)">⚡ Auto-generate my playlist</button>
+    </div>
+
+    <div style="position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;padding:18px 28px 130px;">
+      <sc-for list="{{ pickTiles }}" as="t" hint-placeholder-count="12">
+        <button onClick="{{ t.onToggle }}" style="position:relative;padding:0;border:none;background:none;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:9px;animation:apeUp .45s cubic-bezier(.2,.7,.2,1) both;">
+          <div style="position:relative;aspect-ratio:1/1;overflow:hidden;background:#161619;outline:1px solid rgba(244,241,234,.14);">
+            <img src="{{ t.img }}" loading="lazy" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.06)"/>
+            <sc-if value="{{ t.selected }}">
+              <div aria-hidden="true" style="position:absolute;inset:0;outline:3px solid #F0521E;outline-offset:-3px;pointer-events:none;"></div>
+              <div aria-hidden="true" style="position:absolute;inset:0;background:rgba(240,82,30,.16);pointer-events:none;"></div>
+              <div style="position:absolute;top:9px;right:9px;width:24px;height:24px;border-radius:999px;background:#F0521E;color:#fff;display:grid;place-items:center;font-size:13px;pointer-events:none;box-shadow:0 3px 10px rgba(0,0,0,.4);">✓</div>
+            </sc-if>
+          </div>
+          <div style="font-weight:800;font-size:14px;line-height:1.12;letter-spacing:-.01em;text-transform:uppercase;color:#F4F1EA;">{{ t.displayName }}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="position:relative;z-index:6;display:flex;gap:14px;justify-content:center;align-items:center;padding:18px 40px 110px;font-size:12px;letter-spacing:.04em;opacity:.7;">
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Terms &amp; Conditions</a>
+      <span aria-hidden="true" style="opacity:.5;">|</span>
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Privacy Policy</a>
+    </div>
+
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;background:rgba(12,12,14,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(244,241,234,.14);">
+      <div style="font-size:14px;"><b style="color:#F0521E;font-size:18px;">{{ pickCount }}</b> {{ pickWord }}</div>
+      <sc-if value="{{ pickReady }}">
+        <button onClick="{{ pickNext }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.03)">Pick songs →</button>
+      </sc-if>
+      <sc-if value="{{ pickEmpty }}">
+        <button disabled="{{ true }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;opacity:.3;cursor:not-allowed;">Pick songs →</button>
+      </sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============================ ASSEMBLY ============================ -->
+  <sc-if value="{{ isAsm }}">
+  <section data-screen-label="04 · Build playlist" style="position:relative;min-height:100vh;animation:apeFade .5s cubic-bezier(.2,.7,.2,1);">
+    <sc-if value="{{ splatAccents }}">
+      <div aria-hidden="true" style="position:fixed;bottom:-200px;left:-180px;width:600px;height:480px;background:url(brand/splatorange.jpg) center/cover;opacity:.28;mix-blend-mode:screen;filter:blur(4px);z-index:0;pointer-events:none;"></div>
+    </sc-if>
+    <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.86);backdrop-filter:blur(10px);">
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">3</b> / 3 · Build playlist</div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <button onClick="{{ asmBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Artists</button>
+    </header>
+
+    <div style="position:relative;z-index:2;padding:30px 28px 60px;">
+      <div style="display:flex;flex-wrap:wrap;gap:24px 40px;align-items:flex-end;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid rgba(244,241,234,.2);margin-bottom:28px;">
+        <h2 style="margin:0;font-weight:800;font-size:clamp(28px,4.4vw,52px);line-height:.92;letter-spacing:-.02em;text-transform:uppercase;max-width:14ch;">Pick the songs. <span style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;text-transform:none;">build your playlist.</span></h2>
+        <div style="max-width:300px;text-align:right;color:rgba(244,241,234,.72);font-size:13px;line-height:1.5;">One song each by default - add more from your favourite artists. <span style="color:#F4F1EA;font-weight:600;">{{ dayLabel }}</span></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;">
+        <div style="flex:1 1 460px;min-width:0;">
+
+        <sc-for list="{{ asmBlocks }}" as="b" hint-placeholder-count="4">
+          <div style="border:1px solid rgba(244,241,234,.14);background:#141417;margin-bottom:12px;animation:apeUp .4s cubic-bezier(.2,.7,.2,1) both;">
+            <div onClick="{{ b.onToggleCollapse }}" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;">
+              <div style="font-weight:800;font-size:18px;letter-spacing:-.01em;text-transform:uppercase;flex:1;min-width:0;">{{ b.displayName }}</div>
+              <sc-if value="{{ b.hasChosen }}"><div style="font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#0c0c0e;background:#F0521E;padding:4px 10px;border-radius:999px;font-weight:700;white-space:nowrap;">{{ b.pickedLabel }}</div></sc-if>
+              <sc-if value="{{ b.open }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▾</div></sc-if>
+              <sc-if value="{{ b.collapsed }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▸</div></sc-if>
+            </div>
+            <sc-if value="{{ b.open }}">
+              <div style="padding:0 13px 13px;">
+                <input onInput="{{ b.onSearch }}" placeholder="{{ b.searchPlaceholder }}" style="width:100%;background:#0c0c0e;border:1px solid rgba(244,241,234,.16);color:#F4F1EA;padding:10px 12px;font-size:13px;margin:2px 0 10px;outline:none;"/>
+                <sc-for list="{{ b.songs }}" as="s" hint-placeholder-count="5">
+                  <div onClick="{{ s.onToggle }}" style="position:relative;display:flex;align-items:center;gap:11px;padding:8px 9px;cursor:pointer;" style-hover="background:rgba(244,241,234,.05)">
+                    <sc-if value="{{ s.chosen }}"><span aria-hidden="true" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#F0521E;"></span></sc-if>
+                    <img src="{{ s.thumb }}" loading="lazy" alt="" style="width:58px;height:33px;object-fit:cover;background:#222;flex:none;"/>
+                    <div style="flex:1;min-width:0;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.title }}</div>
+                    <sc-if value="{{ s.chosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;font-size:13px;background:#F0521E;color:#fff;border:1px solid #F0521E;flex:none;">✓</span></sc-if>
+                    <sc-if value="{{ s.notChosen }}"><span style="width:24px;height:24px;border-radius:999px;display:grid;place-items:center;font-size:14px;background:transparent;color:#F4F1EA;border:1px solid rgba(244,241,234,.4);flex:none;">+</span></sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ b.hasMore }}">
+                  <button onClick="{{ b.onToggleMore }}" style="background:none;border:none;color:#F0521E;padding:9px 8px;font-size:12px;letter-spacing:.04em;font-weight:600;">{{ b.moreLabel }}</button>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <div id="ape-summary-col" style="flex:0 0 340px;max-width:340px;align-self:stretch;">
+      <aside id="ape-summary" style="position:fixed;top:78px;right:28px;width:340px;max-height:calc(100vh - 100px);overflow:auto;background:#F4F1EA;color:#0c0c0e;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25);">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#75747c;font-weight:700;">Your playlist</div>
+        <div style="font-size:42px;font-weight:800;line-height:1;letter-spacing:-.02em;margin:6px 0 2px;">{{ setTotal }} <span style="font-size:14px;color:#75747c;font-weight:500;">{{ setWord }}</span></div>
+        <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11px;color:#75747c;margin-bottom:16px;">{{ setProgress }}</div>
+        <div>
+          <sc-for list="{{ setRows }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(12,12,14,.12);font-size:12px;">
+              <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;color:#a3a2a8;width:18px;flex:none;">{{ r.idx }}</div>
+              <div style="flex:1;min-width:0;"><b style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;">{{ r.title }}</b><span style="color:#75747c;font-size:11px;">{{ r.artist }}</span></div>
+              <button onClick="{{ r.onRemove }}" style="background:none;border:none;color:#a3a2a8;cursor:pointer;font-size:15px;line-height:1;flex:none;" style-hover="color:#F0521E">×</button>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ revealReady }}">
+          <button onClick="{{ gotoReveal }}" style="width:100%;margin-top:18px;background:#0c0c0e;color:#F4F1EA;border:none;padding:15px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.02)">Reveal playlist →</button>
+        </sc-if>
+        <sc-if value="{{ revealDisabled }}">
+          <button disabled="{{ true }}" style="width:100%;margin-top:18px;background:#0c0c0e;color:#F4F1EA;border:none;padding:15px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;opacity:.32;cursor:not-allowed;">Reveal playlist →</button>
+        </sc-if>
+      </aside>
+      </div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:6;display:flex;gap:14px;justify-content:center;align-items:center;padding:8px 40px 36px;font-size:12px;letter-spacing:.04em;opacity:.7;">
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Terms &amp; Conditions</a>
+      <span aria-hidden="true" style="opacity:.5;">|</span>
+      <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Privacy Policy</a>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============================ REVEAL ============================ -->
+  <sc-if value="{{ isReveal }}">
+  <section data-screen-label="05 · Reveal" style="position:relative;min-height:100vh;overflow:hidden;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
+    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:60%;background:url(brand/splatblue.jpg) center 30%/cover;z-index:0;opacity:.9;"></div>
+    <div aria-hidden="true" style="position:absolute;top:40%;left:0;right:0;bottom:0;background:url(brand/splatorange.jpg) center 60%/cover;z-index:0;opacity:.9;"></div>
+
+    <header style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+      <div style="width:120px;"></div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:46px;width:auto;display:block;"/>
+      <a href="#" target="_blank" rel="noopener" style="text-decoration:none;background:#F4F1EA;color:#0c0c0e;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:11px 18px;border-radius:999px;white-space:nowrap;">Get Tickets ↗</a>
+    </header>
+
+    <div style="position:relative;z-index:6;max-width:720px;margin:0 auto;padding:18px 24px 80px;">
+      <h2 style="margin:clamp(28px,5vh,60px) 0 0;text-align:center;font-weight:800;font-size:clamp(30px,5vw,54px);line-height:.92;letter-spacing:-.03em;text-transform:uppercase;color:#fff;">Your APE <span style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-weight:400;">playlist</span></h2>
+      <div style="text-align:center;font-size:16px;font-weight:600;opacity:.95;margin-top:8px;">{{ dayLabel }}</div>
+      <div style="text-align:center;font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.75;margin-top:6px;">{{ revSub }}</div>
+
+      <div style="background:rgba(12,12,14,.5);border:1px solid rgba(244,241,234,.18);backdrop-filter:blur(4px);margin:24px 0;padding:6px 8px;">
+        <sc-for list="{{ revRows }}" as="r" hint-placeholder-count="6">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 10px;border-bottom:1px solid rgba(244,241,234,.1);">
+            <img src="{{ r.thumb }}" loading="lazy" alt="" style="width:62px;height:35px;object-fit:cover;background:#222;flex:none;"/>
+            <div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div><div style="font-size:12px;opacity:.78;">{{ r.artist }}</div></div>
+            <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;text-align:right;opacity:.6;flex:none;line-height:1.5;">Stage TBC<br/>Set time TBC</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- SHARE ZONE -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;margin:30px 0 10px;">
+
+        <div style="box-shadow:0 24px 60px rgba(0,0,0,.5);">
+        <div id="ape-share-card" style="position:relative;width:360px;height:450px;overflow:hidden;background:#0c0c0e;color:#fff;flex:none;font-family:'AP Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+          <sc-if value="{{ isBleed }}">
+            <div style="position:absolute;inset:0;background-image:url({{ shareHeroImg }});background-size:cover;background-position:center;"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,14,.2),rgba(12,12,14,.55) 48%,rgba(12,12,14,.93));"></div>
+            <div style="position:absolute;inset:0;background:#F0521E;mix-blend-mode:soft-light;opacity:.3;"></div>
+            <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:22px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:14px;width:auto;"/>
+                <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:18px;text-align:right;line-height:1;">{{ dayLabel }}</div>
+              </div>
+              <div style="flex:1;"></div>
+              <div style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:7px;">My set · {{ shareTotal }} tracks</div>
+              <div style="font-size:11px;line-height:1.5;margin-bottom:12px;">
+                <sc-for list="{{ shareShown }}" as="i" hint-placeholder-count="5">
+                  <div style="margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><span style="font-weight:700;">{{ i.artist }}</span> <span style="opacity:.5;">–</span> <span style="opacity:.85;">{{ i.track }}</span></div>
+                </sc-for>
+                <sc-if value="{{ hasShareMore }}">
+                  <div style="margin-top:7px;font-weight:700;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;">{{ shareMoreText }}</div>
+                </sc-if>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.35);padding-top:10px;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.92;">
+                <span>{{ shareTotal }} tracks</span><span>build yours · all points east</span>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+        </div>
+
+        <sc-if value="{{ hasPicks }}">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;">
+            <sc-for list="{{ shareThumbs }}" as="th" hint-placeholder-count="4">
+              <img onClick="{{ th.onPick }}" src="{{ th.img }}" loading="lazy" alt="" title="{{ th.name }}" style="width:42px;height:42px;border-radius:999px;object-fit:cover;cursor:pointer;transition:opacity .12s,border-color .12s;"/>
+            </sc-for>
+          </div>
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#F4F1EA;background:#292bc6;padding:6px 12px;border-radius:999px;">Tap an artist to change the cover</div>
+        </sc-if>
+
+        <button onClick="{{ download }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.03)">Download Socials Card</button>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px;">
+        <button onClick="{{ exportYT }}" style="background:#F0521E;color:#fff;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.03)">▶ Open in YouTube</button>
+        <button onClick="{{ revBack }}" style="background:transparent;color:#F4F1EA;border:1.5px solid rgba(244,241,234,.6);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;" style-hover="border-color:#F4F1EA">← Edit</button>
+        <button onClick="{{ restart }}" style="background:transparent;color:#F4F1EA;border:1.5px solid rgba(244,241,234,.6);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;" style-hover="border-color:#F4F1EA">Start over</button>
+      </div>
+      <p style="text-align:center;font-size:12px;opacity:.6;margin-top:20px;">Set times and stages to be announced.</p>
+      <div style="display:flex;gap:14px;justify-content:center;align-items:center;padding:8px 40px 0;font-size:12px;letter-spacing:.04em;opacity:.72;">
+        <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Terms &amp; Conditions</a>
+        <span aria-hidden="true" style="opacity:.5;">|</span>
+        <a href="#" style="color:#F4F1EA;text-decoration:none;" style-hover="opacity:1;text-decoration:underline">Privacy Policy</a>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;splatAccents&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    ready:false, screen:'landing', day:null,
+    picked:[], songs:{}, search:{}, more:{}, collapsed:{},
+    shareHero:null, shareStyle:'bleed'
+  };
+
+  componentDidMount(){ this._init(); }
+  _init(){
+    if (typeof window !== 'undefined' && window.__APE_DATA__ && window.__ARTIST_IMG__) {
+      this.DATA = window.__APE_DATA__;
+      this.IMG = window.__ARTIST_IMG__;
+      this.setState({ ready:true });
+    } else {
+      setTimeout(() => this._init(), 30);
+    }
+  }
+
+  artist(n){ return this.DATA ? this.DATA.artists.find(a => a.name === n) : null; }
+  songsFor(a){ const m = new Map(); (a.display||[]).concat(a.search||[]).forEach(s => m.set(s.id, s)); return [...m.values()]; }
+  _top(){ try { window.scrollTo(0,0); } catch(e){} }
+  show(screen){ this.setState({ screen }, () => this._top()); }
+
+  chooseDay(d){ this.setState({ day:d, picked:[], songs:{}, search:{}, more:{}, collapsed:{}, shareHero:null, screen:'pick' }, () => this._top()); }
+  togglePick(name){ this.setState(s => { const p = s.picked.slice(); const i = p.indexOf(name); if (i>=0) p.splice(i,1); else p.push(name); return { picked:p }; }); }
+
+  autoGenerate(){
+    const D = this.DATA, day = this.state.day; if (!D || !day) return;
+    const names = [...D.days[day].artists]; const songs = {};
+    names.forEach(name => { const a = this.artist(name); const top5 = (a.display||[]).slice(0,5); if (top5.length) { const pick = top5[Math.floor(Math.random()*top5.length)]; songs[name] = [pick.id]; } });
+    this.setState({ picked:names, songs, search:{}, more:{}, collapsed:{}, shareHero:null, screen:'asm' }, () => this._top());
+  }
+
+  toggleSong(name, id){
+    this.setState(s => { const songs = Object.assign({}, s.songs); const arr = (songs[name]||[]).slice(); const i = arr.indexOf(id); if (i>=0) arr.splice(i,1); else arr.push(id); if (arr.length) songs[name] = arr; else delete songs[name]; return { songs }; });
+  }
+  setSearch(name, val){ this.setState(s => { const search = Object.assign({}, s.search); search[name] = val; return { search }; }); }
+  toggleMore(name){ this.setState(s => { const more = Object.assign({}, s.more); more[name] = !more[name]; return { more }; }); }
+  toggleCollapse(name){ this.setState(s => { const c = Object.assign({}, s.collapsed); c[name] = !c[name]; return { collapsed:c }; }); }
+  allPicked(){ const s = this.state; return s.picked.length>0 && s.picked.every(n => (s.songs[n]||[]).length>0); }
+  setShareHero(n){ this.setState({ shareHero:n }); }
+  setShareStyle(st){ this.setState({ shareStyle:st }); }
+
+  exportYouTube(){ const s = this.state; const ids = []; s.picked.forEach(n => { (s.songs[n]||[]).forEach(id => ids.push(id)); }); if (!ids.length) return; window.open('https://www.youtube.com/watch_videos?video_ids=' + ids.join(','), '_blank'); }
+
+  async _renderCard(w, h){
+    const card = document.getElementById('ape-share-card');
+    const clone = card.cloneNode(true);
+    clone.style.width = w + 'px';
+    clone.style.height = h + 'px';
+    const holder = document.createElement('div');
+    holder.style.cssText = 'position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none;';
+    holder.appendChild(clone);
+    document.body.appendChild(holder);
+    try {
+      const cv = await html2canvas(clone, { scale:3, useCORS:true, backgroundColor:null });
+      return await new Promise(res => cv.toBlob(b => res(b), 'image/jpeg', 0.92));
+    } finally { document.body.removeChild(holder); }
+  }
+
+  async downloadShareCard(){
+    const card = document.getElementById('ape-share-card');
+    if (!card) return;
+    if (typeof html2canvas === 'undefined') { alert('Image library still loading — try again in a second.'); return; }
+    if (this._dl) return; this._dl = true;
+    try {
+      // Instagram Stories (1080x1920, 9:16) + Feed (1080x1350, 4:5)
+      const story = await this._renderCard(360, 640);
+      const feed  = await this._renderCard(360, 450);
+      const files = [
+        { name:'all-points-east-instagram-story.jpg', blob: story },
+        { name:'all-points-east-instagram-feed.jpg',  blob: feed },
+      ];
+      const zip = await this._makeZip(files);
+      const u = URL.createObjectURL(zip);
+      const a = document.createElement('a');
+      a.href = u; a.download = 'all-points-east-socials.zip'; a.click();
+      URL.revokeObjectURL(u);
+    } finally { this._dl = false; }
+  }
+
+  // Minimal store-method (no compression) ZIP packer — JPEGs are already compressed.
+  async _makeZip(files){
+    const enc = new TextEncoder();
+    const table = this._crcTable || (this._crcTable = (() => {
+      const t = new Uint32Array(256);
+      for (let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = (c&1)?(0xEDB88320^(c>>>1)):(c>>>1); t[n]=c>>>0; }
+      return t;
+    })());
+    const crc32 = (buf) => { let c = 0xFFFFFFFF; for (let i=0;i<buf.length;i++) c = table[(c^buf[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; };
+    const parts = []; const central = []; let offset = 0;
+    const u16 = (n)=>[n&0xFF,(n>>>8)&0xFF];
+    const u32 = (n)=>[n&0xFF,(n>>>8)&0xFF,(n>>>16)&0xFF,(n>>>24)&0xFF];
+    for (const f of files){
+      const data = new Uint8Array(await f.blob.arrayBuffer());
+      const nameBytes = enc.encode(f.name);
+      const crc = crc32(data);
+      const local = [].concat(u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(nameBytes.length), u16(0));
+      parts.push(new Uint8Array(local), nameBytes, data);
+      const cen = [].concat(u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(nameBytes.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset));
+      central.push(new Uint8Array(cen), nameBytes);
+      offset += local.length + nameBytes.length + data.length;
+    }
+    let cenSize = 0; central.forEach(p => cenSize += p.length);
+    const end = new Uint8Array([].concat(u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length), u32(cenSize), u32(offset), u16(0)));
+    return new Blob([...parts, ...central, end], { type:'application/zip' });
+  }
+
+  restart(){ this.setState({ day:null, picked:[], songs:{}, search:{}, more:{}, collapsed:{}, shareHero:null, screen:'landing' }, () => this._top()); }
+
+  renderVals(){
+    const S = this.state, D = this.DATA, IMG = this.IMG || {};
+    const ready = !!(S.ready && D);
+    const P = this.props || {};
+    const grain = P.grain !== false;
+    const splatAccents = P.splatAccents !== false;
+    const edgeTag = P.edgeTag !== false;
+    const dayInfo = (ready && S.day) ? D.days[S.day] : null;
+    const dayLabel = dayInfo ? dayInfo.label : '';
+
+    // POSTER lineup for the day-select page
+    let friHead = [], satHead = [], friAZ = [], satAZ = [];
+    if (ready) {
+      const dispName = (n) => { const a = this.artist(n); return a ? (a.display_name || a.name) : n; };
+      const HFRI = ['Rex Orange County','Turnstile','Mariah The Scientist'];
+      const HSAT = ['Daniel Caesar','Baby Keem','Dijon'];
+      const az = (key, heads) => D.days[key].artists
+        .filter(n => n !== 'Tyler, The Creator' && heads.indexOf(n) < 0)
+        .map(dispName)
+        .sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+      friHead = HFRI.map(dispName); satHead = HSAT.map(dispName);
+      friAZ = az('fri', HFRI); satAZ = az('sat', HSAT);
+    }
+
+    const isLanding = S.screen==='landing', isDay = S.screen==='day', isPick = S.screen==='pick', isAsm = S.screen==='asm', isReveal = S.screen==='reveal';
+
+    // PICK tiles
+    let pickTiles = [];
+    if (ready && S.day) {
+      pickTiles = dayInfo.artists.map(name => {
+        const a = this.artist(name); const selected = S.picked.includes(name);
+        return { name, displayName: a ? (a.display_name||a.name) : name, img: IMG[name]||'', selected, notSelected: !selected, onToggle: () => this.togglePick(name) };
+      });
+    }
+    const pickCount = S.picked.length;
+    const pickWord = (pickCount===1 ? 'artist' : 'artists') + ' selected';
+    const pickReady = pickCount>0, pickEmpty = pickCount===0;
+
+    // ASSEMBLY blocks
+    let asmBlocks = [];
+    if (ready && isAsm) {
+      asmBlocks = S.picked.map(name => {
+        const a = this.artist(name); const chosen = S.songs[name]||[];
+        const q = (S.search[name]||'').trim(); const showMore = !!S.more[name];
+        let pool;
+        if (q) { const ql = q.toLowerCase(); pool = this.songsFor(a).filter(s => s.title.toLowerCase().includes(ql)).slice(0,12); }
+        else { pool = (a.display||[]).slice(0, showMore?10:5); }
+        const songs = pool.map(s => ({ id:s.id, title:s.title, thumb:s.thumb||'', chosen: chosen.includes(s.id), notChosen: !chosen.includes(s.id), onToggle: () => this.toggleSong(name, s.id) }));
+        const collapsed = !!S.collapsed[name];
+        return { name, displayName: a.display_name||a.name, chosenCount: chosen.length, hasChosen: chosen.length>0, pickedLabel: chosen.length+' picked', collapsed, open: !collapsed, onToggleCollapse: () => this.toggleCollapse(name), onSearch: (e) => this.setSearch(name, e.target.value), searchPlaceholder: 'Search '+(a.display_name||a.name)+' songs…', songs, hasMore: (!q && (a.display||[]).length>5), moreLabel: showMore?'Show less':'Reveal 5 more', onToggleMore: () => this.toggleMore(name) };
+      });
+    }
+
+    // SET + flat list
+    const flat = []; S.picked.forEach(n => { (S.songs[n]||[]).forEach(id => flat.push({ name:n, id })); });
+    const setRows = flat.map((f, i) => { const a = this.artist(f.name); const s = a ? this.songsFor(a).find(x => x.id===f.id) : null; return { idx: String(i+1).padStart(2,'0'), title: s?s.title:f.id, artist: a ? (a.display_name||a.name) : f.name, onRemove: () => this.toggleSong(f.name, f.id) }; });
+    const setTotal = flat.length; const setWord = setTotal===1?'song':'songs';
+    const pickedArtists = S.picked.filter(n => (S.songs[n]||[]).length).length;
+    const setProgress = pickedArtists + ' / ' + S.picked.length + ' artists';
+    const revealReady = this.allPicked(); const revealDisabled = !revealReady;
+
+    // REVEAL rows
+    const revRows = flat.map(f => { const a = this.artist(f.name); const s = a ? this.songsFor(a).find(x => x.id===f.id) : null; return { thumb: s?s.thumb:'', title: s?s.title:'', artist: a ? (a.display_name||a.name) : f.name }; });
+    const revSub = setTotal + ' songs · ' + pickedArtists + ' artists';
+
+    // SHARE
+    const order = dayInfo ? dayInfo.artists : [];
+    const picks = S.picked.filter(n => (S.songs[n]||[]).length);
+    let hero = S.shareHero;
+    if (!hero || !picks.includes(hero)) { hero = picks.slice().sort((a,b) => order.indexOf(a) - order.indexOf(b))[0] || null; }
+    const cleanTitle = (t, artistName) => {
+      let s = t || '';
+      const esc = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // YouTube uploader pattern:  "TITLE" by UPLOADER  ->  TITLE
+      const m = s.match(/^["'“”‘’](.+?)["'“”‘’]\s+by\s+.+$/i);
+      if (m) s = m[1];
+      // drop parenthetical / bracketed format tags (Official Audio, [Official Video], etc.)
+      s = s.replace(/[\(\[][^)\]]*\b(official|audio|video|visuali[sz]er|lyric|lyrics|hd|hq|explicit|remaster[^)\]]*|4k|mv)\b[^)\]]*[\)\]]/gi, '');
+      // drop a trailing "by <artist>" credit
+      s = s.replace(new RegExp('\\s+by\\s+' + esc + '\\s*$', 'i'), '');
+      // strip wrapping quotes / stray punctuation
+      s = s.replace(/^["'“”‘’\s]+|["'“”‘’\s]+$/g, '');
+      s = s.replace(/\s{2,}/g, ' ').replace(/[\s·\-–]+$/,'').trim();
+      return s;
+    };
+    const stripArtist = (title, artistName) => {
+      const esc = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return title.replace(new RegExp('^\\s*' + esc + '\\s*[-–:]\\s*', 'i'), '').trim();
+    };
+    let shareLines = [];
+    picks.forEach(n => {
+      const a = this.artist(n); const dn = a ? (a.display_name||a.name) : n;
+      (S.songs[n]||[]).forEach(id => {
+        const s = this.songsFor(a).find(x => x.id===id);
+        if (!s) return;
+        const track = stripArtist(cleanTitle(s.title, dn), dn);
+        if (track) shareLines.push({ artist: dn, track });
+      });
+    });
+    const shareTotal = shareLines.length;
+    const SHARE_MAX = 5;
+    const shareShown = shareLines.slice(0, SHARE_MAX);
+    const shareMoreN = Math.max(0, shareTotal - SHARE_MAX);
+    const hasShareMore = shareMoreN > 0;
+    const shareMoreText = hasShareMore ? ('+ ' + shareMoreN + ' more') : '';
+    const shareHeroImg = hero ? (IMG[hero]||'') : '';
+    const shareThumbs = picks.map(n => ({ img: IMG[n]||'', name:n, on: n===hero, off: n!==hero, onPick: () => this.setShareHero(n) }));
+    const isBleed = true;
+    const hasPicks = picks.length>0;
+
+    return {
+      ready, grain, splatAccents, edgeTag,
+      isLanding, isDay, isPick, isAsm, isReveal,
+      dayLabel, friHead, satHead, friAZ, satAZ,
+      startBuilding: () => this.show('day'),
+      dayBack: () => this.show('landing'),
+      chooseFri: () => this.chooseDay('fri'),
+      chooseSat: () => this.chooseDay('sat'),
+      pickBack: () => this.show('day'),
+      autoGen: () => this.autoGenerate(),
+      pickNext: () => { if (this.state.picked.length) this.show('asm'); },
+      asmBack: () => this.show('pick'),
+      gotoReveal: () => { if (this.allPicked()) this.show('reveal'); },
+      revBack: () => this.show('asm'),
+      restart: () => this.restart(),
+      exportYT: () => this.exportYouTube(),
+      download: () => this.downloadShareCard(),
+      pickTiles, pickCount, pickWord, pickReady, pickEmpty,
+      asmBlocks,
+      setRows, setTotal, setWord, setProgress, revealReady, revealDisabled,
+      revRows, revSub,
+      shareShown, shareMoreText, hasShareMore, shareTotal, shareHeroImg, shareThumbs, hasPicks,
+      isBleed
+    };
+  }
+}
+</script>
+</body>
+</html>
