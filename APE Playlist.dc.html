@@ -300,8 +300,8 @@
   <!-- ============================ REVEAL ============================ -->
   <sc-if value="{{ isReveal }}">
   <section data-screen-label="05 · Reveal" style="position:relative;min-height:100vh;overflow:hidden;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
-    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:60%;background:url(brand/splatblue.jpg) center 30%/cover;z-index:0;opacity:.9;"></div>
-    <div aria-hidden="true" style="position:absolute;top:40%;left:0;right:0;bottom:0;background:url(brand/splatorange.jpg) center 60%/cover;z-index:0;opacity:.9;"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatorange.jpg) center 60%/cover;z-index:0;"></div>
+    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:60%;background:url(brand/splatblue.jpg) center 30%/cover;z-index:0;-webkit-mask-image:linear-gradient(to bottom,#000 66%,transparent);mask-image:linear-gradient(to bottom,#000 66%,transparent);"></div>
 
     <header class="ape-topbar" style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
       <div class="ape-topbar-spacer" style="width:120px;"></div>
