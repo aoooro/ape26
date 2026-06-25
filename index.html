@@ -26,13 +26,16 @@
   @keyframes apeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
   @keyframes apeFade{from{opacity:0}to{opacity:1}}
   @media (max-width:880px){
-    #ape-summary-col{flex:1 1 100% !important;max-width:none !important;}
+    #ape-summary-col{flex:1 1 100% !important;max-width:none !important;min-width:0 !important;}
     #ape-summary{position:static !important;width:auto !important;max-height:none !important;right:auto !important;top:auto !important;box-shadow:none !important;}
   }
   @media (max-width:768px){
     .ape-topbar{flex-direction:column !important;gap:14px !important;padding:20px 16px 0 !important;}
     .ape-topbar-spacer{display:none !important;}
     .ape-logo-hero{height:auto !important;width:auto !important;max-width:min(74vw,360px) !important;}
+    .ape-logo-mini{display:none !important;}
+    .ape-day-col{padding-left:14px !important;padding-right:14px !important;}
+    .ape-day-cta{display:flex !important;width:100% !important;justify-content:center;text-align:center;font-size:11px !important;padding:11px 12px !important;letter-spacing:.02em !important;gap:6px !important;line-height:1.15;}
   }
 </style>
 </helmet>
@@ -93,7 +96,7 @@
 
     <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.92);backdrop-filter:blur(10px);">
       <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">1</b> / 3 · Pick your day</div>
-      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" class="ape-logo-mini" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
       <button onClick="{{ dayBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Back</button>
     </header>
 
@@ -103,7 +106,7 @@
     </div>
 
     <div style="position:relative;z-index:6;flex:1;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;padding:clamp(18px,3vh,40px) 0 0;">
-      <button onClick="{{ chooseFri }}" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.08s;" style-hover="filter:brightness(1.07)">
+      <button onClick="{{ chooseFri }}" class="ape-day-col" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.08s;" style-hover="filter:brightness(1.07)">
         <div>
           <div style="font-weight:800;text-transform:uppercase;font-size:clamp(30px,4.4vw,58px);line-height:.9;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.4);">Friday</div>
           <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:clamp(14px,1.6vw,20px);margin-top:4px;opacity:.95;text-shadow:0 1px 3px rgba(12,12,14,.4);">Fri 28 Aug</div>
@@ -119,10 +122,10 @@
             <div style="break-inside:avoid;">{{ n }}</div>
           </sc-for>
         </div>
-        <div style="margin-top:auto;padding-top:8px;"><span style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Friday set <span style="font-size:16px;">→</span></span></div>
+        <div style="margin-top:auto;padding-top:8px;"><span class="ape-day-cta" style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Friday set <span style="font-size:16px;">→</span></span></div>
       </button>
 
-      <button onClick="{{ chooseSat }}" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.16s;" style-hover="filter:brightness(1.07)">
+      <button onClick="{{ chooseSat }}" class="ape-day-col" style="position:relative;border:none;background:none;cursor:pointer;text-align:left;color:#fff;padding:clamp(20px,2.6vw,48px) clamp(22px,2.6vw,44px) clamp(20px,3vh,40px);display:flex;flex-direction:column;gap:clamp(14px,2vh,22px);transition:filter .18s;animation:apeUp .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:.16s;" style-hover="filter:brightness(1.07)">
         <div>
           <div style="font-weight:800;text-transform:uppercase;font-size:clamp(30px,4.4vw,58px);line-height:.9;letter-spacing:-.02em;text-shadow:0 1px 4px rgba(12,12,14,.4);">Saturday</div>
           <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:clamp(14px,1.6vw,20px);margin-top:4px;opacity:.95;text-shadow:0 1px 3px rgba(12,12,14,.4);">Sat 29 Aug</div>
@@ -138,7 +141,7 @@
             <div style="break-inside:avoid;">{{ n }}</div>
           </sc-for>
         </div>
-        <div style="margin-top:auto;padding-top:8px;"><span style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Saturday set <span style="font-size:16px;">→</span></span></div>
+        <div style="margin-top:auto;padding-top:8px;"><span class="ape-day-cta" style="display:inline-flex;align-items:center;gap:9px;background:#F4F1EA;color:#0c0c0e;padding:12px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 10px 30px rgba(12,12,14,.35);">Build Saturday set <span style="font-size:16px;">→</span></span></div>
       </button>
     </div>
 
@@ -161,7 +164,7 @@
     </sc-if>
     <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.86);backdrop-filter:blur(10px);">
       <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">2</b> / 3 · Pick artists</div>
-      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" class="ape-logo-mini" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
       <button onClick="{{ pickBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Day</button>
     </header>
 
@@ -216,7 +219,7 @@
     </sc-if>
     <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid rgba(244,241,234,.14);background:rgba(12,12,14,.86);backdrop-filter:blur(10px);">
       <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.6);display:flex;align-items:center;gap:10px;"><span style="width:8px;height:8px;border-radius:999px;background:#F0521E;display:inline-block;"></span>Step <b style="color:#F0521E;">3</b> / 3 · Build playlist</div>
-      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" class="ape-logo-mini" style="height:20px;width:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);"/>
       <button onClick="{{ asmBack }}" style="background:none;border:none;color:rgba(244,241,234,.78);font-size:12px;letter-spacing:.1em;text-transform:uppercase;" style-hover="color:#F4F1EA">← Artists</button>
     </header>
 
