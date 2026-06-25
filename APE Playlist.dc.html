@@ -28,6 +28,11 @@
     #ape-summary-col{flex:1 1 100% !important;max-width:none !important;}
     #ape-summary{position:static !important;width:auto !important;max-height:none !important;right:auto !important;top:auto !important;box-shadow:none !important;}
   }
+  @media (max-width:768px){
+    .ape-topbar{flex-direction:column !important;gap:14px !important;padding:20px 16px 0 !important;}
+    .ape-topbar-spacer{display:none !important;}
+    .ape-logo-hero{height:auto !important;width:auto !important;max-width:min(74vw,360px) !important;}
+  }
 </style>
 </helmet>
 <div style="position:relative;min-height:100vh;background:#0c0c0e;color:#F4F1EA;font-family:'AP Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
@@ -42,9 +47,9 @@
     <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatorange.jpg) center center/cover;z-index:0;clip-path:inset(0 0 calc(100% - 58vh) 0);"></div>
     <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatblue.jpg) center center/cover;z-index:0;clip-path:inset(58vh 0 0 0);"></div>
 
-    <header style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
-      <div style="width:120px;"></div>
-      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:46px;width:auto;display:block;"/>
+    <header class="ape-topbar" style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+      <div class="ape-topbar-spacer" style="width:120px;"></div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" class="ape-logo-hero" style="height:46px;width:auto;display:block;"/>
       <a href="https://www.allpointseastfestival.com/" target="_blank" rel="noopener" style="text-decoration:none;background:#F4F1EA;color:#0c0c0e;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:11px 18px;border-radius:999px;white-space:nowrap;">Get Tickets ↗</a>
     </header>
 
@@ -289,9 +294,9 @@
     <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:60%;background:url(brand/splatblue.jpg) center 30%/cover;z-index:0;opacity:.9;"></div>
     <div aria-hidden="true" style="position:absolute;top:40%;left:0;right:0;bottom:0;background:url(brand/splatorange.jpg) center 60%/cover;z-index:0;opacity:.9;"></div>
 
-    <header style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
-      <div style="width:120px;"></div>
-      <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:46px;width:auto;display:block;"/>
+    <header class="ape-topbar" style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
+      <div class="ape-topbar-spacer" style="width:120px;"></div>
+      <img src="brand/ape-logo-longline-white.png" alt="All Points East" class="ape-logo-hero" style="height:46px;width:auto;display:block;"/>
       <a href="https://www.allpointseastfestival.com/" target="_blank" rel="noopener" style="text-decoration:none;background:#F4F1EA;color:#0c0c0e;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:11px 18px;border-radius:999px;white-space:nowrap;">Get Tickets ↗</a>
     </header>
 
