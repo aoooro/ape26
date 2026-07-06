@@ -238,11 +238,14 @@
 
         <sc-for list="{{ asmBlocks }}" as="b" hint-placeholder-count="4">
           <div style="border:1px solid rgba(244,241,234,.14);background:#141417;margin-bottom:12px;animation:apeUp .4s cubic-bezier(.2,.7,.2,1) both;">
-            <div onClick="{{ b.onToggleCollapse }}" style="display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;">
-              <div style="font-weight:800;font-size:18px;letter-spacing:-.01em;text-transform:uppercase;flex:1;min-width:0;">{{ b.displayName }}</div>
-              <sc-if value="{{ b.hasChosen }}"><div style="font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#0c0c0e;background:#F0521E;padding:4px 10px;border-radius:999px;font-weight:700;white-space:nowrap;">{{ b.pickedLabel }}</div></sc-if>
-              <sc-if value="{{ b.open }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▾</div></sc-if>
-              <sc-if value="{{ b.collapsed }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▸</div></sc-if>
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 16px;">
+              <div onClick="{{ b.onToggleCollapse }}" style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;cursor:pointer;">
+                <div style="font-weight:800;font-size:18px;letter-spacing:-.01em;text-transform:uppercase;flex:1;min-width:0;">{{ b.displayName }}</div>
+                <sc-if value="{{ b.hasChosen }}"><div style="font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#0c0c0e;background:#F0521E;padding:4px 10px;border-radius:999px;font-weight:700;white-space:nowrap;">{{ b.pickedLabel }}</div></sc-if>
+                <sc-if value="{{ b.open }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▾</div></sc-if>
+                <sc-if value="{{ b.collapsed }}"><div style="color:rgba(244,241,234,.5);font-size:13px;">▸</div></sc-if>
+              </div>
+              <button onClick="{{ b.onRemove }}" aria-label="Remove artist" title="Remove artist" style="background:none;border:none;color:rgba(244,241,234,.4);cursor:pointer;font-size:20px;line-height:1;padding:0 2px;flex:none;" style-hover="color:#F0521E">×</button>
             </div>
             <sc-if value="{{ b.open }}">
               <div style="padding:0 13px 13px;">
@@ -300,8 +303,14 @@
   <!-- ============================ REVEAL ============================ -->
   <sc-if value="{{ isReveal }}">
   <section data-screen-label="05 · Reveal" style="position:relative;min-height:100vh;overflow:hidden;animation:apeIn .5s cubic-bezier(.2,.7,.2,1);">
-    <div aria-hidden="true" style="position:absolute;inset:0;background:url(brand/splatorange.jpg) center 60%/cover;z-index:0;"></div>
-    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:60%;background:url(brand/splatblue.jpg) center 30%/cover;z-index:0;-webkit-mask-image:linear-gradient(to bottom,#000 66%,transparent);mask-image:linear-gradient(to bottom,#000 66%,transparent);"></div>
+    <!-- Background SCROLLS with the content (position:absolute — no position:fixed, so no iOS parallax
+         "jump" or dynamic-viewport white bar). A solid blue base fills the whole (tall) page; the splats
+         are viewport-height bands pinned to the top, so they stay crisp (never stretched over the height).
+         svh units keep the split stable when the mobile URL bar shows/hides. -->
+    <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;background:#2f2fc6;"></div>
+    <div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:72svh;z-index:0;background:url(brand/splatorange.jpg) center center/cover;-webkit-mask-image:linear-gradient(180deg,#000 52%,transparent);mask-image:linear-gradient(180deg,#000 52%,transparent);"></div>
+    <div aria-hidden="true" style="position:absolute;top:40svh;left:0;right:0;height:104svh;z-index:0;background:url(brand/splatblue.jpg) center center/cover;-webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 66%,transparent);mask-image:linear-gradient(180deg,transparent,#000 20%,#000 66%,transparent);"></div>
+
 
     <header class="ape-topbar" style="position:relative;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 0;">
       <div class="ape-topbar-spacer" style="width:120px;"></div>
@@ -319,7 +328,6 @@
           <div style="display:flex;align-items:center;gap:12px;padding:11px 10px;border-bottom:1px solid rgba(244,241,234,.1);">
             <img src="{{ r.thumb }}" loading="lazy" alt="" style="width:62px;height:35px;object-fit:cover;background:#222;flex:none;"/>
             <div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div><div style="font-size:12px;opacity:.78;">{{ r.artist }}</div></div>
-            <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;text-align:right;opacity:.6;flex:none;line-height:1.5;">Stage TBC<br/>Set time TBC</div>
           </div>
         </sc-for>
       </div>
@@ -358,22 +366,56 @@
         </div>
         </div>
 
+        <!-- OFFSCREEN 9:16 STORY RENDER SOURCE (never shown; content inset from IG top/bottom chrome) -->
+        <div aria-hidden="true" style="position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none;">
+          <div id="ape-share-card-story" style="position:relative;width:360px;height:640px;overflow:hidden;background:#0c0c0e;color:#fff;font-family:'AP Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;">
+            <div style="position:absolute;inset:0;background-image:url({{ shareHeroImg }});background-size:cover;background-position:center;"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,14,.55) 0%,rgba(12,12,14,.12) 20%,rgba(12,12,14,.12) 44%,rgba(12,12,14,.72) 70%,rgba(12,12,14,.96) 100%);"></div>
+            <div style="position:absolute;inset:0;background:#F0521E;mix-blend-mode:soft-light;opacity:.3;"></div>
+            <!-- padding: top clears the username/profile row, bottom clears the message bar + reaction icons -->
+            <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:84px 26px 112px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <img src="brand/ape-logo-longline-white.png" alt="All Points East" style="height:16px;width:auto;"/>
+                <div style="font-family:'ABC Walter',Georgia,serif;font-style:italic;font-size:18px;text-align:right;line-height:1;white-space:nowrap;">{{ dayLabel }}</div>
+              </div>
+              <div style="flex:1;"></div>
+              <div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:9px;">My set · {{ shareTotal }} tracks</div>
+              <div style="font-size:12.5px;line-height:1.5;margin-bottom:14px;">
+                <sc-for list="{{ shareShown }}" as="i" hint-placeholder-count="5">
+                  <div style="margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><span style="font-weight:700;">{{ i.artist }}</span> <span style="opacity:.5;">–</span> <span style="opacity:.85;">{{ i.track }}</span></div>
+                </sc-for>
+                <sc-if value="{{ hasShareMore }}">
+                  <div style="margin-top:8px;font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;">{{ shareMoreText }}</div>
+                </sc-if>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.35);padding-top:11px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.92;">
+                <span>{{ shareTotal }} tracks</span><span>build yours · all points east</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <sc-if value="{{ hasPicks }}">
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:400px;">
             <sc-for list="{{ shareThumbs }}" as="th" hint-placeholder-count="4">
               <img onClick="{{ th.onPick }}" src="{{ th.img }}" loading="lazy" alt="" title="{{ th.name }}" style="width:42px;height:42px;border-radius:999px;object-fit:cover;cursor:pointer;transition:opacity .12s,border-color .12s;"/>
             </sc-for>
           </div>
-          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#F4F1EA;background:#292bc6;padding:6px 12px;border-radius:999px;">Tap an artist to change the cover</div>
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#F4F1EA;opacity:.82;">Tap an artist to change the cover</div>
         </sc-if>
 
-        <button onClick="{{ download }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.03)">Download Socials Card</button>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+          <button onClick="{{ shareStory }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;transition:transform .14s;" style-hover="transform:scale(1.03)">Save <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-1.5px);"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.5" cy="6.5" r="1.15" fill="currentColor" stroke="none"/></svg> Story</button>
+          <button onClick="{{ shareFeed }}" style="background:#F4F1EA;color:#0c0c0e;border:none;padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;transition:transform .14s;" style-hover="transform:scale(1.03)">Save <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" aria-hidden="true" style="transform:translateY(-1.5px);"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.5" cy="6.5" r="1.15" fill="currentColor" stroke="none"/></svg> Feed</button>
+        </div>
+        <div style="font-size:11.5px;letter-spacing:.02em;opacity:.75;text-align:center;color:#F4F1EA;">Saves to your <b style="font-weight:700;">camera roll</b> — ready to post to Instagram.</div>
+        <button onClick="{{ exportYT }}" style="background:transparent;color:#F4F1EA;border:1.5px solid rgba(244,241,234,.5);padding:13px 26px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;transition:transform .14s,border-color .14s,background .14s;" style-hover="border-color:#F4F1EA;background:rgba(244,241,234,.06)"><svg width="23" height="17" viewBox="0 0 28 20" fill="currentColor" aria-hidden="true" style="transform:translateY(-0.5px);"><path fill-rule="evenodd" clip-rule="evenodd" d="M27.4 3.12A3.52 3.52 0 0 0 24.92.63C22.73 0 14 0 14 0S5.27 0 3.08.63A3.52 3.52 0 0 0 .6 3.12 36.7 36.7 0 0 0 0 10a36.7 36.7 0 0 0 .6 6.88 3.52 3.52 0 0 0 2.48 2.49C5.27 20 14 20 14 20s8.73 0 10.92-.63a3.52 3.52 0 0 0 2.48-2.49A36.7 36.7 0 0 0 28 10a36.7 36.7 0 0 0-.6-6.88ZM11.2 14.29V5.71L18.63 10l-7.43 4.29Z"/></svg>Open in YouTube</button>
       </div>
 
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px;">
-        <button onClick="{{ exportYT }}" style="background:#F0521E;color:#fff;border:none;padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;transition:transform .14s;" style-hover="transform:scale(1.03)">▶︎ Open in YouTube</button>
-        <button onClick="{{ revBack }}" style="background:transparent;color:#F4F1EA;border:1.5px solid rgba(244,241,234,.6);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;" style-hover="border-color:#F4F1EA">← Edit</button>
-        <button onClick="{{ restart }}" style="background:transparent;color:#F4F1EA;border:1.5px solid rgba(244,241,234,.6);padding:14px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;" style-hover="border-color:#F4F1EA">Start over</button>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:40px;">
+        <button onClick="{{ revBack }}" style="background:none;border:none;color:#F4F1EA;opacity:.7;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .14s;" style-hover="opacity:1">← Edit playlist</button>
+        <span aria-hidden="true" style="opacity:.28;font-size:12px;">·</span>
+        <button onClick="{{ restart }}" style="background:none;border:none;color:#F4F1EA;opacity:.7;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:opacity .14s;" style-hover="opacity:1">&#x21BB;&#xFE0E; Start over</button>
       </div>
       <p style="text-align:center;font-size:12px;opacity:.6;margin-top:20px;">Set times and stages to be announced.</p>
       <div style="display:flex;gap:14px;justify-content:center;align-items:center;padding:8px 40px 0;font-size:12px;letter-spacing:.04em;opacity:.72;">
@@ -409,7 +451,7 @@ class Component extends DCLogic {
   artist(n){ return this.DATA ? this.DATA.artists.find(a => a.name === n) : null; }
   songsFor(a){ const m = new Map(); (a.display||[]).concat(a.search||[]).forEach(s => m.set(s.id, s)); return [...m.values()]; }
   _top(){ try { window.scrollTo(0,0); } catch(e){} }
-  show(screen){ this.setState({ screen }, () => this._top()); }
+  show(screen){ this.setState({ screen }, () => { this._top(); if (screen==='reveal') this._schedulePrewarm(); }); }
 
   chooseDay(d){ this.setState({ day:d, picked:[], songs:{}, search:{}, more:{}, collapsed:{}, shareHero:null, screen:'pick' }, () => this._top()); }
   togglePick(name){ this.setState(s => { const p = s.picked.slice(); const i = p.indexOf(name); if (i>=0) p.splice(i,1); else p.push(name); return { picked:p }; }); }
@@ -427,73 +469,101 @@ class Component extends DCLogic {
   setSearch(name, val){ this.setState(s => { const search = Object.assign({}, s.search); search[name] = val; return { search }; }); }
   toggleMore(name){ this.setState(s => { const more = Object.assign({}, s.more); more[name] = !more[name]; return { more }; }); }
   toggleCollapse(name){ this.setState(s => { const c = Object.assign({}, s.collapsed); c[name] = !c[name]; return { collapsed:c }; }); }
+  removeArtist(name){ this.setState(s => { const picked = s.picked.filter(n => n !== name); const songs = Object.assign({}, s.songs); delete songs[name]; const search = Object.assign({}, s.search); delete search[name]; const more = Object.assign({}, s.more); delete more[name]; const collapsed = Object.assign({}, s.collapsed); delete collapsed[name]; return { picked, songs, search, more, collapsed, shareHero: s.shareHero===name ? null : s.shareHero }; }); }
   allPicked(){ const s = this.state; return s.picked.length>0 && s.picked.every(n => (s.songs[n]||[]).length>0); }
-  setShareHero(n){ this.setState({ shareHero:n }); }
+  setShareHero(n){ this.setState({ shareHero:n }, () => this._schedulePrewarm()); }
   setShareStyle(st){ this.setState({ shareStyle:st }); }
 
   exportYouTube(){ const s = this.state; const ids = []; s.picked.forEach(n => { (s.songs[n]||[]).forEach(id => ids.push(id)); }); if (!ids.length) return; window.open('https://www.youtube.com/watch_videos?video_ids=' + ids.join(','), '_blank'); }
 
-  async _renderCard(w, h){
-    const card = document.getElementById('ape-share-card');
-    const clone = card.cloneNode(true);
-    clone.style.width = w + 'px';
-    clone.style.height = h + 'px';
+  // Rasterise a card element at its OWN native size (no stretching — story is 9:16, post is 4:5).
+  async _renderEl(id){
+    const src = document.getElementById(id);
+    if (!src) return null;
+    const clone = src.cloneNode(true);
     const holder = document.createElement('div');
     holder.style.cssText = 'position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none;';
     holder.appendChild(clone);
     document.body.appendChild(holder);
+    // Lower scale on phones — a scale:3 (1080×1920) canvas can exhaust memory / hang on iOS Safari.
+    const scale = (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ? 2 : 3;
     try {
-      const cv = await html2canvas(clone, { scale:3, useCORS:true, backgroundColor:null });
+      // Race html2canvas against a hard timeout so a hung render can never freeze the UI or the _dl lock.
+      const cv = await Promise.race([
+        html2canvas(clone, { scale, useCORS:true, backgroundColor:null, imageTimeout:7000, logging:false }),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('Render timed out')), 12000))
+      ]);
       return await new Promise(res => cv.toBlob(b => res(b), 'image/jpeg', 0.92));
     } finally { document.body.removeChild(holder); }
   }
 
-  async downloadShareCard(){
-    const card = document.getElementById('ape-share-card');
-    if (!card) return;
-    if (typeof html2canvas === 'undefined') { alert('Image library still loading — try again in a second.'); return; }
-    if (this._dl) return; this._dl = true;
+  // Pre-rasterise both cards so shareCard() can fire navigator.share() inside the tap's
+  // user-activation window (iOS drops it if you await a long task first).
+  _cardSig(){ const s = this.state; return [s.day, s.shareHero||'', (s.picked||[]).map(n => n+':'+((s.songs[n]||[]).join(','))).join('|')].join('~'); }
+  _schedulePrewarm(){ clearTimeout(this._pwT); this._pwT = setTimeout(() => this._prewarm(), 300); }
+  async _prewarm(){
+    if (typeof html2canvas === 'undefined' || this.state.screen !== 'reveal' || this._warming) return;
+    const sig = this._cardSig();
+    if (this._cache && this._cache.sig === sig && this._cache.story && this._cache.post) return;
+    this._warming = true;
     try {
-      // Instagram Stories (1080x1920, 9:16) + Feed (1080x1350, 4:5)
-      const story = await this._renderCard(360, 640);
-      const feed  = await this._renderCard(360, 450);
-      const files = [
-        { name:'all-points-east-instagram-story.jpg', blob: story },
-        { name:'all-points-east-instagram-feed.jpg',  blob: feed },
-      ];
-      const zip = await this._makeZip(files);
-      const u = URL.createObjectURL(zip);
-      const a = document.createElement('a');
-      a.href = u; a.download = 'all-points-east-socials.zip'; a.click();
-      URL.revokeObjectURL(u);
-    } finally { this._dl = false; }
+      const feed  = await this._renderEl('ape-share-card');
+      const story = await this._renderEl('ape-share-card-story');
+      if (feed && story) this._cache = { sig, feed, story };
+    } catch(e){} finally { this._warming = false; }
   }
 
-  // Minimal store-method (no compression) ZIP packer — JPEGs are already compressed.
-  async _makeZip(files){
-    const enc = new TextEncoder();
-    const table = this._crcTable || (this._crcTable = (() => {
-      const t = new Uint32Array(256);
-      for (let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = (c&1)?(0xEDB88320^(c>>>1)):(c>>>1); t[n]=c>>>0; }
-      return t;
-    })());
-    const crc32 = (buf) => { let c = 0xFFFFFFFF; for (let i=0;i<buf.length;i++) c = table[(c^buf[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; };
-    const parts = []; const central = []; let offset = 0;
-    const u16 = (n)=>[n&0xFF,(n>>>8)&0xFF];
-    const u32 = (n)=>[n&0xFF,(n>>>8)&0xFF,(n>>>16)&0xFF,(n>>>24)&0xFF];
-    for (const f of files){
-      const data = new Uint8Array(await f.blob.arrayBuffer());
-      const nameBytes = enc.encode(f.name);
-      const crc = crc32(data);
-      const local = [].concat(u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(nameBytes.length), u16(0));
-      parts.push(new Uint8Array(local), nameBytes, data);
-      const cen = [].concat(u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(data.length), u32(data.length), u16(nameBytes.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset));
-      central.push(new Uint8Array(cen), nameBytes);
-      offset += local.length + nameBytes.length + data.length;
-    }
-    let cenSize = 0; central.forEach(p => cenSize += p.length);
-    const end = new Uint8Array([].concat(u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length), u32(cenSize), u32(offset), u16(0)));
-    return new Blob([...parts, ...central, end], { type:'application/zip' });
+  // kind: 'story' (9:16) | 'feed' (4:5). Native share sheet on mobile, download on desktop.
+  async shareCard(kind){
+    if (this._dl) return; this._dl = true;
+    // Show an overlay IMMEDIATELY (synchronously, inside the tap) so something always appears — proving
+    // the tap fired — and every failure surfaces as a readable message instead of doing nothing.
+    this._showOverlay({ message:'Preparing your image…', spinner:true });
+    try {
+      if (typeof html2canvas === 'undefined') { this._showOverlay({ message:'The image tool didn’t load.\nMake sure this device has internet, then tap again.' }); return; }
+      const sig = this._cardSig();
+      let blob = (this._cache && this._cache.sig===sig) ? this._cache[kind] : null;
+      if (!blob) {
+        const id = kind==='story' ? 'ape-share-card-story' : 'ape-share-card';
+        try { blob = await this._renderEl(id); } catch(e){ this._showOverlay({ message:'Couldn’t create the image.\n' + (e && e.message ? e.message : e) }); return; }
+      }
+      if (!blob) { this._showOverlay({ message:'Couldn’t create the image. Please try again.' }); return; }
+      const fname = kind==='story' ? 'all-points-east-story.jpg' : 'all-points-east-feed.jpg';
+      const isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      let file = null; try { file = new File([blob], fname, { type:'image/jpeg' }); } catch(e){}
+      if (isTouch && file && navigator.canShare && navigator.canShare({ files:[file] })) {
+        // Native share sheet (needs HTTPS / secure context). Close overlay and hand off.
+        this._closeOverlay();
+        try { await navigator.share({ files:[file], title:'All Points East 2026', text:'My All Points East 2026 setlist' }); }
+        catch(err){ if (!(err && err.name === 'AbortError')) this._showOverlay({ blob, message:'Press & hold the image, then “Save to Photos”.' }); }
+        return;
+      }
+      if (isTouch) {
+        // No native share here (e.g. plain-HTTP local testing) → show the image to long-press save.
+        this._showOverlay({ blob, message:'Press & hold the image, then “Save to Photos”.' });
+      } else {
+        this._closeOverlay(); this._saveBlob(blob, fname); // desktop: straight download
+      }
+    } catch(err){ this._showOverlay({ message:'Something went wrong.\n' + (err && err.message ? err.message : err) }); }
+    finally { this._dl = false; }
+  }
+
+  _saveBlob(blob, fname){ const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = fname; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
+
+  _closeOverlay(){ const p = document.getElementById('ape-ov'); if (p) { if (p.__u) URL.revokeObjectURL(p.__u); p.remove(); } }
+
+  // Full-screen overlay: optional rendered image (long-press → "Save to Photos") + a message. Pure DOM,
+  // so it works over plain HTTP with no popup/navigation and preserves app state.
+  _showOverlay(opts){
+    this._closeOverlay();
+    const ov = document.createElement('div'); ov.id = 'ape-ov';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(12,12,14,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);';
+    if (opts.blob) { const u = URL.createObjectURL(opts.blob); ov.__u = u; const img = document.createElement('img'); img.src = u; img.style.cssText = 'max-width:100%;max-height:64vh;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.55);'; ov.appendChild(img); }
+    if (opts.message) { const m = document.createElement('div'); m.textContent = opts.message; m.style.cssText = "color:#F4F1EA;font-size:14px;line-height:1.5;letter-spacing:.02em;max-width:330px;white-space:pre-line;font-family:'AP Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;"; ov.appendChild(m); }
+    if (!opts.spinner) { const b = document.createElement('button'); b.textContent = 'Done'; b.style.cssText = "background:#F4F1EA;color:#0c0c0e;border:none;padding:12px 30px;border-radius:999px;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.03em;font-family:inherit;"; b.addEventListener('click', () => this._closeOverlay()); ov.appendChild(b); }
+    ov.addEventListener('click', (e) => { if (e.target === ov) this._closeOverlay(); });
+    document.body.appendChild(ov);
+    return ov;
   }
 
   restart(){ this.setState({ day:null, picked:[], songs:{}, search:{}, more:{}, collapsed:{}, shareHero:null, screen:'landing' }, () => this._top()); }
@@ -547,7 +617,7 @@ class Component extends DCLogic {
         else { pool = (a.display||[]).slice(0, showMore?10:5); }
         const songs = pool.map(s => ({ id:s.id, title:s.title, thumb:s.thumb||'', chosen: chosen.includes(s.id), notChosen: !chosen.includes(s.id), onToggle: () => this.toggleSong(name, s.id) }));
         const collapsed = !!S.collapsed[name];
-        return { name, displayName: a.display_name||a.name, chosenCount: chosen.length, hasChosen: chosen.length>0, pickedLabel: chosen.length+' picked', collapsed, open: !collapsed, onToggleCollapse: () => this.toggleCollapse(name), onSearch: (e) => this.setSearch(name, e.target.value), searchPlaceholder: 'Search '+(a.display_name||a.name)+' songs…', songs, hasMore: (!q && (a.display||[]).length>5), moreLabel: showMore?'Show less':'Reveal 5 more', onToggleMore: () => this.toggleMore(name) };
+        return { name, displayName: a.display_name||a.name, chosenCount: chosen.length, hasChosen: chosen.length>0, pickedLabel: chosen.length+' picked', collapsed, open: !collapsed, onToggleCollapse: () => this.toggleCollapse(name), onRemove: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.removeArtist(name); }, onSearch: (e) => this.setSearch(name, e.target.value), searchPlaceholder: 'Search '+(a.display_name||a.name)+' songs…', songs, hasMore: (!q && (a.display||[]).length>5), moreLabel: showMore?'Show less':'Reveal 5 more', onToggleMore: () => this.toggleMore(name) };
       });
     }
 
@@ -624,7 +694,8 @@ class Component extends DCLogic {
       revBack: () => this.show('asm'),
       restart: () => this.restart(),
       exportYT: () => this.exportYouTube(),
-      download: () => this.downloadShareCard(),
+      shareStory: () => this.shareCard('story'),
+      shareFeed: () => this.shareCard('feed'),
       pickTiles, pickCount, pickWord, pickReady, pickEmpty,
       asmBlocks,
       setRows, setTotal, setWord, setProgress, revealReady, revealDisabled,
