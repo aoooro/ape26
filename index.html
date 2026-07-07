@@ -484,11 +484,9 @@ class Component extends DCLogic {
     s.picked.forEach(n => { (s.songs[n]||[]).forEach(id => ids.push(id)); });
     if (!ids.length) return;
 
-    // Local/LAN dev → stand-in worker (ytm_worker_local.py, port 4127). Production → the client's
-    // deployed Cloudflare Worker (worker/worker.js) — set its *.workers.dev URL here after deploy.
-    const dev = /^(localhost|127\.0\.0\.1|192\.168\.|10\.)/.test(location.hostname);
-    const WORKER = dev ? ('http://' + location.hostname + ':4127')
-                       : 'https://APE26-YTM-WORKER-NOT-DEPLOYED.invalid';
+    // TLGG hop (worker/worker.js) — currently a staging deploy on the prototype owner's
+    // Cloudflare account. Swap for the client's own *.workers.dev URL when they deploy worker/.
+    const WORKER = 'https://ape26-ytm.ar-e53.workers.dev';
 
     const win = window.open('about:blank', '_blank');   // sync open survives popup blockers
 
