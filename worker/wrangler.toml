@@ -1,0 +1,8 @@
+name = "ape26-ytm"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Deploy (from this directory, with the Cloudflare account that will own it):
+#   npx wrangler login
+#   npx wrangler deploy
+# Copy the printed *.workers.dev URL into WORKER in index.html's exportYouTube().
