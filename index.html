@@ -10,7 +10,6 @@
 <x-dc>
 <helmet>
 <script src="data/ape-data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   *{box-sizing:border-box}
   @font-face{font-family:'AP Grotesk';src:url('brand/fonts/APAllPurposeGroteskTRIAL-Black.otf') format('opentype');font-weight:800 900;font-style:normal;font-display:swap;}
@@ -478,24 +477,136 @@ class Component extends DCLogic {
   exportYouTube(){ const s = this.state; const ids = []; s.picked.forEach(n => { (s.songs[n]||[]).forEach(id => ids.push(id)); }); if (!ids.length) return; window.open('https://www.youtube.com/watch_videos?video_ids=' + ids.join(','), '_blank'); }
 
   // Rasterise a card element at its OWN native size (no stretching — story is 9:16, post is 4:5).
-  async _renderEl(id){
-    const src = document.getElementById(id);
-    if (!src) return null;
-    const clone = src.cloneNode(true);
-    const holder = document.createElement('div');
-    holder.style.cssText = 'position:fixed;left:-99999px;top:0;z-index:-1;pointer-events:none;';
-    holder.appendChild(clone);
-    document.body.appendChild(holder);
-    // Lower scale on phones — a scale:3 (1080×1920) canvas can exhaust memory / hang on iOS Safari.
-    const scale = (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ? 2 : 3;
-    try {
-      // Race html2canvas against a hard timeout so a hung render can never freeze the UI or the _dl lock.
-      const cv = await Promise.race([
-        html2canvas(clone, { scale, useCORS:true, backgroundColor:null, imageTimeout:7000, logging:false }),
-        new Promise((_, rej) => setTimeout(() => rej(new Error('Render timed out')), 12000))
-      ]);
-      return await new Promise(res => cv.toBlob(b => res(b), 'image/jpeg', 0.92));
-    } finally { document.body.removeChild(holder); }
+  // ---- Share-card rendering: native Canvas 2D (no html2canvas — it hangs on iOS Safari). ----
+  // The card is one same-origin hero image + logo + gradients + text, so we draw it directly.
+
+  _loadImg(src){
+    return new Promise((res, rej) => {
+      const im = new Image();
+      const t = setTimeout(() => rej(new Error('Image timed out: ' + src)), 8000);
+      im.onload = () => { clearTimeout(t); res(im); };
+      im.onerror = () => { clearTimeout(t); rej(new Error('Image failed: ' + src)); };
+      im.src = src;
+    });
+  }
+
+  // Mirrors update()'s SHARE block: picks, hero (with fallback), cleaned track lines.
+  _shareData(){
+    const S = this.state, D = this.DATA, IMG = this.IMG || {};
+    const dayInfo = (D && S.day) ? D.days[S.day] : null;
+    const order = dayInfo ? dayInfo.artists : [];
+    const picks = S.picked.filter(n => (S.songs[n]||[]).length);
+    let hero = S.shareHero;
+    if (!hero || !picks.includes(hero)) { hero = picks.slice().sort((a,b) => order.indexOf(a) - order.indexOf(b))[0] || null; }
+    const cleanTitle = (t, artistName) => {
+      let s = t || '';
+      const esc = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const m = s.match(/^["'“”‘’](.+?)["'“”‘’]\s+by\s+.+$/i);
+      if (m) s = m[1];
+      s = s.replace(/[\(\[][^)\]]*\b(official|audio|video|visuali[sz]er|lyric|lyrics|hd|hq|explicit|remaster[^)\]]*|4k|mv)\b[^)\]]*[\)\]]/gi, '');
+      s = s.replace(new RegExp('\\s+by\\s+' + esc + '\\s*$', 'i'), '');
+      s = s.replace(/^["'“”‘’\s]+|["'“”‘’\s]+$/g, '');
+      s = s.replace(/\s{2,}/g, ' ').replace(/[\s·\-–]+$/,'').trim();
+      return s;
+    };
+    const stripArtist = (title, artistName) => {
+      const esc = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return title.replace(new RegExp('^\\s*' + esc + '\\s*[-–:]\\s*', 'i'), '').trim();
+    };
+    const lines = [];
+    picks.forEach(n => {
+      const a = this.artist(n); const dn = a ? (a.display_name||a.name) : n;
+      (S.songs[n]||[]).forEach(id => {
+        const s = this.songsFor(a).find(x => x.id===id);
+        if (!s) return;
+        const track = stripArtist(cleanTitle(s.title, dn), dn);
+        if (track) lines.push({ artist: dn, track });
+      });
+    });
+    return { heroImg: hero ? (IMG[hero]||'') : '', dayLabel: dayInfo ? dayInfo.label : '', lines, total: lines.length };
+  }
+
+  // kind: 'feed' (1080×1350) | 'story' (1080×1920). Layout = 3× the on-screen 360px card.
+  async _drawCard(kind){
+    const data = this._shareData();
+    if (!data.heroImg || !data.total) throw new Error('No playlist to render yet');
+    if (document.fonts && document.fonts.load) {
+      try { await Promise.all([
+        document.fonts.load('400 33px "AP Grotesk"'), document.fonts.load('700 33px "AP Grotesk"'),
+        document.fonts.load('800 33px "AP Grotesk"'), document.fonts.load('italic 400 54px "ABC Walter"'),
+      ]); } catch(e){}
+    }
+    const [hero, logo] = await Promise.all([ this._loadImg(data.heroImg), this._loadImg('brand/ape-logo-longline-white.png') ]);
+
+    const story = kind === 'story';
+    const W = 1080, H = story ? 1920 : 1350;
+    // paddings/sizes = 3× the DOM cards (feed 22px all round; story 84/26/112 for IG safe zones)
+    const padX = story ? 78 : 66, padT = story ? 252 : 66, padB = story ? 336 : 66;
+    const F = story
+      ? { logo:48, day:54, label:30, labelLs:4.8, labelMb:27, track:37.5, trackPitch:71, more:31.5, moreLs:3.2, moreMt:24, foot:31.5, footLs:1.6, footPt:33 }
+      : { logo:42, day:54, label:27, labelLs:4.3, labelMb:21, track:33,   trackPitch:61, more:28.5, moreLs:2.9, moreMt:21, foot:28.5, footLs:1.4, footPt:30 };
+    const SANS = '"AP Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif';
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
+    const ls = (px) => { try { ctx.letterSpacing = px + 'px'; } catch(e){} };
+
+    // base + hero (cover-fit) + gradient scrim + orange soft-light wash
+    ctx.fillStyle = '#0c0c0e'; ctx.fillRect(0,0,W,H);
+    const ir = hero.width/hero.height, r = W/H;
+    const dw = ir > r ? H*ir : W, dh = ir > r ? H : W/ir;
+    ctx.drawImage(hero, (W-dw)/2, (H-dh)/2, dw, dh);
+    const g = ctx.createLinearGradient(0,0,0,H);
+    if (story) { g.addColorStop(0,'rgba(12,12,14,.55)'); g.addColorStop(.20,'rgba(12,12,14,.12)'); g.addColorStop(.44,'rgba(12,12,14,.12)'); g.addColorStop(.70,'rgba(12,12,14,.72)'); g.addColorStop(1,'rgba(12,12,14,.96)'); }
+    else { g.addColorStop(0,'rgba(12,12,14,.2)'); g.addColorStop(.48,'rgba(12,12,14,.55)'); g.addColorStop(1,'rgba(12,12,14,.93)'); }
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = .3;
+    ctx.fillStyle = '#F0521E'; ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+
+    // header: logo left, day label right
+    ctx.drawImage(logo, padX, padT, F.logo * (logo.width/logo.height), F.logo);
+    ctx.fillStyle = '#fff'; ctx.textBaseline = 'top'; ctx.textAlign = 'right'; ls(0);
+    ctx.font = 'italic 400 ' + F.day + 'px "ABC Walter",Georgia,serif';
+    ctx.fillText(data.dayLabel, W - padX, padT - F.day*0.12);
+
+    // bottom-anchored stack (drawn bottom-up): footer / rule / +N more / tracks / label
+    const maxW = W - padX*2;
+    const ell = (text, font, avail) => { ctx.font = font; if (ctx.measureText(text).width <= avail) return text; let t = text; while (t.length > 1 && ctx.measureText(t + '…').width > avail) t = t.slice(0,-1); return t + '…'; };
+    ctx.textBaseline = 'alphabetic';
+    let y = H - padB;
+    ctx.globalAlpha = .92; ls(F.footLs); ctx.font = '400 ' + F.foot + 'px ' + SANS;
+    ctx.textAlign = 'left';  ctx.fillText((data.total + ' tracks').toUpperCase(), padX, y);
+    ctx.textAlign = 'right'; ctx.fillText('BUILD YOURS · ALL POINTS EAST', W - padX, y);
+    ctx.textAlign = 'left'; ls(0);
+    y -= (F.foot + F.footPt);
+    ctx.globalAlpha = .35; ctx.fillRect(padX, y, maxW, 2); ctx.globalAlpha = 1;
+    y -= (story ? 42 : 36); // block margin above the rule
+    const SHARE_MAX = 5;
+    const shown = data.lines.slice(0, SHARE_MAX);
+    const moreN = Math.max(0, data.total - SHARE_MAX);
+    if (moreN) {
+      ctx.globalAlpha = .7; ls(F.moreLs); ctx.font = '700 ' + F.more + 'px ' + SANS;
+      ctx.fillText('+ ' + moreN + ' MORE', padX, y);
+      ls(0); y -= (F.more + F.moreMt);
+    }
+    const boldF = '700 ' + F.track + 'px ' + SANS, regF = '400 ' + F.track + 'px ' + SANS;
+    for (let i = shown.length - 1; i >= 0; i--) {
+      const L = shown[i];
+      ctx.font = boldF; const aw = Math.min(ctx.measureText(L.artist).width, maxW*.55);
+      ctx.font = regF;  const sw = ctx.measureText(' – ').width;
+      const artist = ell(L.artist, boldF, maxW*.55);
+      const track  = ell(L.track,  regF,  maxW - aw - sw);
+      ctx.globalAlpha = 1;  ctx.font = boldF; ctx.fillText(artist, padX, y);
+      ctx.globalAlpha = .5; ctx.font = regF;  ctx.fillText(' – ', padX + aw, y);
+      ctx.globalAlpha = .85;                  ctx.fillText(track, padX + aw + sw, y);
+      y -= F.trackPitch;
+    }
+    y -= F.labelMb - (F.trackPitch - F.track); // label sits labelMb above the first track line
+    ctx.globalAlpha = .7; ls(F.labelLs); ctx.font = '400 ' + F.label + 'px ' + SANS;
+    ctx.fillText(('My set · ' + data.total + ' tracks').toUpperCase(), padX, y);
+    ctx.globalAlpha = 1; ls(0);
+
+    return await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('Canvas export failed')), 'image/jpeg', 0.92));
   }
 
   // Pre-rasterise both cards so shareCard() can fire navigator.share() inside the tap's
@@ -503,13 +614,13 @@ class Component extends DCLogic {
   _cardSig(){ const s = this.state; return [s.day, s.shareHero||'', (s.picked||[]).map(n => n+':'+((s.songs[n]||[]).join(','))).join('|')].join('~'); }
   _schedulePrewarm(){ clearTimeout(this._pwT); this._pwT = setTimeout(() => this._prewarm(), 300); }
   async _prewarm(){
-    if (typeof html2canvas === 'undefined' || this.state.screen !== 'reveal' || this._warming) return;
+    if (this.state.screen !== 'reveal' || this._warming) return;
     const sig = this._cardSig();
-    if (this._cache && this._cache.sig === sig && this._cache.story && this._cache.post) return;
+    if (this._cache && this._cache.sig === sig && this._cache.story && this._cache.feed) return;
     this._warming = true;
     try {
-      const feed  = await this._renderEl('ape-share-card');
-      const story = await this._renderEl('ape-share-card-story');
+      const feed  = await this._drawCard('feed');
+      const story = await this._drawCard('story');
       if (feed && story) this._cache = { sig, feed, story };
     } catch(e){} finally { this._warming = false; }
   }
@@ -521,12 +632,10 @@ class Component extends DCLogic {
     // the tap fired — and every failure surfaces as a readable message instead of doing nothing.
     this._showOverlay({ message:'Preparing your image…', spinner:true });
     try {
-      if (typeof html2canvas === 'undefined') { this._showOverlay({ message:'The image tool didn’t load.\nMake sure this device has internet, then tap again.' }); return; }
       const sig = this._cardSig();
       let blob = (this._cache && this._cache.sig===sig) ? this._cache[kind] : null;
       if (!blob) {
-        const id = kind==='story' ? 'ape-share-card-story' : 'ape-share-card';
-        try { blob = await this._renderEl(id); } catch(e){ this._showOverlay({ message:'Couldn’t create the image.\n' + (e && e.message ? e.message : e) }); return; }
+        try { blob = await this._drawCard(kind); } catch(e){ this._showOverlay({ message:'Couldn’t create the image.\n' + (e && e.message ? e.message : e) }); return; }
       }
       if (!blob) { this._showOverlay({ message:'Couldn’t create the image. Please try again.' }); return; }
       const fname = kind==='story' ? 'all-points-east-story.jpg' : 'all-points-east-feed.jpg';
