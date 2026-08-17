@@ -509,9 +509,8 @@ class Component extends DCLogic {
     s.picked.forEach(n => { (s.songs[n]||[]).forEach(id => ids.push(id)); });
     if (!ids.length) return;
 
-    // TLGG hop (worker/worker.js) — currently a staging deploy on the prototype owner's
-    // Cloudflare account. Swap for the client's own *.workers.dev URL when they deploy worker/.
-    const WORKER = 'https://ape26-ytm.ar-e53.workers.dev';
+    // TLGG hop (worker/worker.js) — dedicated worker 'ape-playlist-ytm' on the ooo.io Cloudflare account.
+    const WORKER = 'https://ape-playlist-ytm.ar-e53.workers.dev';
 
     const win = window.open('about:blank', '_blank');   // sync open survives popup blockers
 
